@@ -440,7 +440,8 @@ public:
         GBR,
         GRB,
         RGBW,
-        RBG
+        RBG,
+        GRBW
     };
 #if QT_VERSION >= 0x050500
     Q_ENUM(Components)

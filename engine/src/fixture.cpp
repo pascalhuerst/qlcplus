@@ -748,6 +748,18 @@ QLCFixtureDef *Fixture::genericRGBPanelDef(int columns, Components components)
             def->addChannel(blue);
             def->addChannel(white);
         }
+        else if (components == GRBW)
+        {
+            QLCChannel* white = new QLCChannel();
+            white->setName(QString("White %1").arg(i + 1));
+            white->setGroup(QLCChannel::Intensity);
+            white->setColour(QLCChannel::White);
+
+            def->addChannel(green);
+            def->addChannel(red);
+            def->addChannel(blue);
+            def->addChannel(white);
+        }
         else
         {
             def->addChannel(red);
@@ -779,6 +791,11 @@ QLCFixtureMode *Fixture::genericRGBPanelMode(QLCFixtureDef *def, Components comp
         mode->setName("RGBW");
         compNum = 4;
     }
+    else if (components == GRBW)
+    {
+        mode->setName("GRBW");
+        compNum = 4;
+    }
     else
         mode->setName("RGB");
 
@@ -793,7 +810,7 @@ QLCFixtureMode *Fixture::genericRGBPanelMode(QLCFixtureDef *def, Components comp
             head.addChannel(i);
             head.addChannel(i+1);
             head.addChannel(i+2);
-            if (components == RGBW)
+            if (components == RGBW || components == GRBW)
                 head.addChannel(i+3);
             mode->insertHead(-1, head);
         }
@@ -1028,6 +1045,11 @@ bool Fixture::loadXML(QXmlStreamReader &xmlDoc, Doc *doc,
         else if (modeName == "RGBW")
         {
             components = RGBW;
+            compNum = 4;
+        }
+        else if (modeName == "GRBW")
+        {
+            components = GRBW;
             compNum = 4;
         }
 
